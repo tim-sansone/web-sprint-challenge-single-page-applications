@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import axios from "axios";
 import * as yup from "yup";
@@ -12,34 +12,56 @@ import schema from "./Validation/Schema";
 
 const formInitialValues = {
   name: "",
+  email: "",
+  phone: null,
   size: "",
+  crust: "",
+  cheese: "",
+  sauce: "",
   pepperoni: false,
   sausage: false,
   bacon: false,
-  mushroom: false,
-  onion: false,
-  ["green-pepper"]: false,
+  ham: false,
+  beef: false,
+  salami: false,
+  mushrooms: false,
+  onions: false,
+  ["green-peppers"]: false,
+  ["black-olives"]: false,
+  ["diced-tomatoes"]: false,
+  ["roasted-red-peppers"]: false,
   ["special-text"]: ""
 }
 
 const errorsInitialValues = {
   name: "",
+  email: "",
+  phone: "",
   size: "",
+  crust: "",
+  cheese: "",
+  sauce: "",
   ["special-text"]: ""
 }
 
+const disabledInitialValue = true;
 
 
 const App = () => {
   const [form, setForm] = useState(formInitialValues);
   const [errors, setErrors] = useState(errorsInitialValues);
   const [serverRes, setServerRes] = useState("");
+  const [disabled, setDisabled] = useState(disabledInitialValue);
 
   const validate = (name, value) => {
     yup.reach(schema, name).validate(value)
       .then(res => setErrors({...errors, [name]: ""}))
       .catch(err => setErrors({...errors, [name]: err.errors[0]}))
   }
+
+  useEffect(() => {
+    schema.isValid(form).then(res => setDisabled(!res));
+  }, [form])
 
   const formChange = (name, value) => {
     validate(name, value);
@@ -75,6 +97,7 @@ const App = () => {
             form={form}
             formChange={formChange}
             submitForm={submitForm}
+            disabled={disabled}
             errors={errors}
             serverRes={serverRes}
           />

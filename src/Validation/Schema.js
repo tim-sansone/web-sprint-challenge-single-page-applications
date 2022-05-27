@@ -6,15 +6,40 @@ const schema = yup.object().shape({
             .trim()
             .required("Please enter your name")
             .min(2, "name must be at least 2 characters"),
-    size: yup
+    email: yup
+            .string()
+            .trim()
+            .email("Please enter a valid email")
+            .required("Please enter your email"),
+    phone: yup
+            .number()
+            .typeError("Please enter a valid phone number")
+            .required("Please enter a valid phone number"),
+    size: yup   
             .string()
             .oneOf(["small", "medium", "large", "extra-large", "party"], "Please select a size"),
+    crust: yup
+            .string()
+            .oneOf(["brooklyn-style", "hand-tossed", "crunchy-thin-crust"], "Please choose a crust option"),
+    cheese: yup
+            .string()
+            .oneOf(["none", "light", "normal", "extra"], "Please choose a cheese option"),
+    sauce: yup
+            .string()
+            .oneOf(["robust-tomato", "honey-bbq", "parmesan", "none"], "Please choose a sauce option"),
+    
     pepperoni: yup.boolean(),
     sausage: yup.boolean(),
     bacon: yup.boolean(),
-    mushroom: yup.boolean(),
-    onion: yup.boolean(),
-    ["green-pepper"]: yup.boolean(),
+    ham: yup.boolean(),
+    beef: yup.boolean(),
+    salami: yup.boolean(),
+    mushrooms: yup.boolean(),
+    onions: yup.boolean(),
+    ["green-peppers"]: yup.boolean(),
+    ["black-olives"]: yup.boolean(),
+    ["diced-tomatoes"]: yup.boolean(),
+    ["roasted-red-peppers"]: yup.boolean(),
     ["special-text"]: yup
                         .string()
                         .trim()
