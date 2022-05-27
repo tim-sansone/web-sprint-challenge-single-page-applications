@@ -6,7 +6,8 @@ export default function Form(props){
         form,
         formChange,
         submitForm,
-        errors
+        errors,
+        serverRes
     } = props;
 
     const onChange = evt => {
@@ -22,6 +23,7 @@ export default function Form(props){
 
     return (
         
+        <>
         <form id="pizza-form" onSubmit={onSubmit}>
             <h1>Build Your Own Pizza</h1>
             <div className="errors">
@@ -29,7 +31,7 @@ export default function Form(props){
                 <p>{errors.size}</p>
                 <p>{errors["special-text"]}</p>
             </div>
-            <div className="form-section">
+            <div className="form-section info">
                 <h2>Your Info</h2>
                 <label>Name
                     <input 
@@ -41,7 +43,7 @@ export default function Form(props){
                     />
                 </label>
             </div>
-            <div className="form-section">
+            <div className="form-section size">
 
                 <label>
                     <h2>Choose a Size</h2>
@@ -60,7 +62,7 @@ export default function Form(props){
                     </select>
                 </label>
             </div>
-            <div className="form-section">
+            <div className="form-section toppings">
                 <h2>Add Toppings</h2>
                 <label>Pepperoni
                     <input 
@@ -126,6 +128,9 @@ export default function Form(props){
             <button id="order-button">Submit</button>
 
         </form>
-
+        <div>
+            {serverRes && JSON.stringify(serverRes)}
+        </div>
+        </>
     )
 }

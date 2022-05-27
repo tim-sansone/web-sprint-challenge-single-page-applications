@@ -33,6 +33,7 @@ const errorsInitialValues = {
 const App = () => {
   const [form, setForm] = useState(formInitialValues);
   const [errors, setErrors] = useState(errorsInitialValues);
+  const [serverRes, setServerRes] = useState("");
 
   const validate = (name, value) => {
     yup.reach(schema, name).validate(value)
@@ -55,8 +56,10 @@ const App = () => {
     
     
     axios.post("https://reqres.in/api/orders", order)
-      .then(res => console.log(res))
+      .then(res => setServerRes(res))
       .catch(err => console.log(err))
+
+    setForm(formInitialValues);
   }
 
 
@@ -73,6 +76,7 @@ const App = () => {
             formChange={formChange}
             submitForm={submitForm}
             errors={errors}
+            serverRes={serverRes}
           />
         </Route>
         <Route  path="/">
